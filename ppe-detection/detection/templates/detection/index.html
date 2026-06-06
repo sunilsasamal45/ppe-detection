@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPE Detection System</title>
+    <link rel="stylesheet" href="{% static 'detection/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>PPE Detection System</h1>
+        <div id="video-container">
+            <video id="video-stream" autoplay></video>
+        </div>
+        <div class="controls">
+            <button id="start-stream">Start Streaming</button>
+            <button id="stop-stream">Stop Streaming</button>
+        </div>
+        <div id="detection-log">
+            <h2>Detection Log</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Class ID</th>
+                        <th>Class Name</th>
+                        <th>Confidence</th>
+                        <th>Track ID</th>
+                        <th>Bounding Box</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="log-entries">
+                    <!-- Detection logs will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div id="statistics">
+            <h2>Statistics</h2>
+            <div id="total-detections">Total Detections: 0</div>
+            <div id="class-distribution">
+                <canvas id="class-distribution-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'detection/js/main.js' %}"></script>
+</body>
+</html>

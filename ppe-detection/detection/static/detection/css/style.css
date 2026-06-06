@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: #35424a;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.video-stream {
+    width: 100%;
+    height: auto;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.detection-log {
+    margin-top: 20px;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.detection-log table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detection-log th, .detection-log td {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    text-align: left;
+}
+
+.detection-log th {
+    background: #35424a;
+    color: #ffffff;
+}
+
+.pie-chart {
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+}

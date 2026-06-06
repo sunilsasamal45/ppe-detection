@@ -1,0 +1,10 @@
+Django==4.2
+daphne==3.0.1
+channels==4.0.0
+opencv-python==4.5.5.64
+ultralytics==8.0.0
+pygame==2.1.2
+channels-redis==4.0.0
+numpy==1.21.2
+pillow==9.0.1
+chart.js==3.7.0
