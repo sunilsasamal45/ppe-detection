@@ -7,6 +7,8 @@ import asyncio
 import time
 import pytz
 import sqlite3
+import urllib.request
+import urllib.parse
 from collections import deque
 from channels.generic.websocket import AsyncWebsocketConsumer
 from ultralytics import YOLO
@@ -14,6 +16,20 @@ from datetime import datetime
 
 
 CONFIDENCE_THRESHOLD = 0.3  # Minimum confidence to consider a detection
+
+# Telegram Bot Configuration
+TELEGRAM_BOT_TOKEN = "7564093390:AAGJU5INCiI1hjOah4rWDIw1oS1zCQcQEmI"
+TELEGRAM_CHAT_ID = "5154424717"
+
+def send_telegram_alert(message):
+    """Send an alert message to Telegram."""
+    try:
+        text = urllib.parse.quote(message)
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage?chat_id={TELEGRAM_CHAT_ID}&text={text}"
+        urllib.request.urlopen(url, timeout=5)
+        print(f"Telegram alert sent: {message}")
+    except Exception as e:
+        print(f"Failed to send Telegram alert: {e}")
 
 # Initialize the model
 model = YOLO('app1/best.pt')
@@ -147,6 +163,20 @@ class VideoStreamConsumer(AsyncWebsocketConsumer):
                         if duration > self.ALERT_TIME_THRESHOLD:
                             print(f"Alert! Object ID {track_id} with Class ID {class_id} detected for {duration:.2f} seconds!")
                             pygame.mixer.Sound.play(alert_sound)
+
+                            # Send Telegram alert
+                            violation_name = model.names[class_id]
+                            riyadh_tz = pytz.timezone("Asia/Riyadh")
+                            alert_time = datetime.now(riyadh_tz).strftime("%Y-%m-%d %H:%M:%S")
+                            alert_msg = (
+                                f"⚠️ PPE VIOLATION ALERT!\n"
+                                f"🚨 Violation: {violation_name}\n"
+                                f"🆔 Track ID: {track_id}\n"
+                                f"📊 Confidence: {detection['confidence']:.2f}\n"
+                                f"🕐 Time: {alert_time}"
+                            )
+                            asyncio.create_task(asyncio.to_thread(send_telegram_alert, alert_msg))
+
                             del self.object_entry_time[track_id]
 
                 detections.append(detection)
